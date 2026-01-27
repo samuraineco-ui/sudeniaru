@@ -1,221 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>スデニアル | ないではなく、あるから始める</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --bg: #f6f3ee;
-      --text: #1c1b1a;
-      --accent: #c7765c;
-      --muted: #726c66;
-      --card: #fffdfa;
-      --soft: #fdf6ef;
-    }
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.8;
-      letter-spacing: 0.03em;
-    }
-    header {
-      min-height: 85vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 4rem 1rem;
-      background: radial-gradient(circle at top, rgba(255,255,255,0.8), rgba(255,255,255,0)) , linear-gradient(135deg, #fefaf5, #f1eadf);
-    }
-    header .inner {
-      max-width: 900px;
-    }
-    h1 {
-      font-size: clamp(2.4rem, 4vw, 3.6rem);
-      margin-bottom: 1rem;
-      letter-spacing: 0.08em;
-    }
-    p.lead {
-      font-size: 1.1rem;
-      color: var(--muted);
-      margin: 0 auto;
-      max-width: 720px;
-    }
-    main {
-      padding: 3rem 1.5rem 5rem;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    section {
-      margin-bottom: 3.5rem;
-      background: var(--card);
-      padding: 2.5rem;
-      border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.04);
-    }
-    section h2 {
-      margin-top: 0;
-      font-size: 1.6rem;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-    }
-    ul {
-      padding-left: 1.2rem;
-    }
-    li {
-      margin-bottom: 0.6rem;
-    }
-    blockquote {
-      margin: 1.5rem 0;
-      padding: 1.5rem;
-      border-left: 4px solid var(--accent);
-      background: var(--soft);
-      border-radius: 12px;
-      color: var(--muted);
-      font-style: italic;
-    }
-    .cta {
-      text-align: center;
-      background: linear-gradient(135deg, #fefaf5, #e4d5c4);
-      border: 1px solid rgba(199,118,92,0.3);
-    }
-    .cta p {
-      margin-bottom: 1.5rem;
-    }
-    .cta a {
-      display: inline-block;
-      padding: 0.9rem 2.6rem;
-      border-radius: 999px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }
-    .cta a:hover {
-      background: var(--accent);
-      color: #fff;
-    }
-    .note {
-      text-align: center;
-      font-size: 0.95rem;
-      color: var(--muted);
-      background: transparent;
-      box-shadow: none;
-    }
-    footer {
-      text-align: center;
-      padding: 2rem 1rem 3rem;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-    .cat-container {
-      text-align: center;
-      margin-top: 2rem;
-      padding-bottom: 2rem;
-    }
-    .cat-container img {
-      max-width: 300px;
-      width: 100%;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スデニアル | サイト製作中</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f6f3ee;
+            --text: #1c1b1a;
+            --accent: #c7765c;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: normal;
+            letter-spacing: 0.1em;
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <div class="inner">
-      <p class="lead">Already Enough, Yet Open.</p>
-      <h1>ないではなく、あるから始める</h1>
-      <p class="lead">満たそうとして走り続ける日々に、そっと「もう十分あるのかもしれない」という問いを添えました。スデニアルは、欠けた部分を埋めるより、すでに手のひらにあるものへ静かに光を当てます。</p>
-    </div>
-  </header>
-  <main>
-    <section>
-      <h2>「足りない」に縛られた社会</h2>
-      <p>成果も肩書きも更新されていくのに、心は軽くならない。もっと頑張れ、もっと取りに行けという声ばかりを浴びて、私たちはいつの間にか自分を削っています。気づけば会議もアルゴリズムも「不足の穴埋め」ばかり。それでも安心感は遠いままです。</p>
-    </section>
-
-    <section>
-      <h2>視点を変えると、景色が変わる</h2>
-      <p>ないものを数える癖を一度手放し、いまある呼吸や仲間、積み重ねた経験を静かに数えてみる。そこに感謝が芽生えた瞬間、次の一歩は自然と前向きになります。これがスデニアルの起点です。</p>
-      <blockquote>ないものを追いかけて走り続けた足を一度とめてみると、すでにいくつもの光が宿っていることに気づく。その瞬間、未来は「取りに行くもの」から「共にひらくもの」に姿を変える。</blockquote>
-    </section>
-
-    <section>
-      <h2>スデニアルの由来と背景</h2>
-      <p>スデニアル（Sudeniaru）は「すでにある」という言葉の響きをそのまま抱いた名前です。創業メンバーは成果主義の荒波の中で、「勝つため」ではなく「分かち合うため」のプロジェクトを描きました。手のひらに射す朝の光をシンボルに、感謝を起点とする連鎖をデザインします。</p>
-      <p>モットーは <strong>Already Enough, Yet Open.</strong> もう十分ある、でもまだひらける。その余白にこそ、人に寄り添う技術と物語が宿ると信じています。</p>
-    </section>
-
-    <section>
-      <h2>人に寄り添う新しいマーケティング</h2>
-      <p>奪うのではなく、共に味わうマーケティングへ。AIやテクノロジーは主役ではなく、人肌を忘れない伴走役です。問いを設計し、気づきを受け取り、感謝を交換する。そんな体験を丁寧に編むことで、価値は静かに膨らみます。</p>
-      <ul>
-        <li>Presence：まずはその場にいる。数字よりも息づかいを聴く。</li>
-        <li>Sensing：感情とデータを往復し、本音をすくい上げる。</li>
-        <li>Sharing：出会った光を分かち合い、連鎖を描く。</li>
-        <li>Gentle Tech：人肌を忘れない技術を選ぶ。</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>私たちがそっとできること</h2>
-      <ul>
-        <li>本音を受けとめるリスニングと問いの設計</li>
-        <li>感情とデータを往復するナラティブデザイン</li>
-        <li>小さな体験を積み重ねるコミュニティ設計</li>
-        <li>共に歩むプロトタイプ（PoC）の同伴</li>
-        <li>余白を生むマイクロコンテンツや往復書簡</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>こんな人とつながりたい</h2>
-      <ul>
-        <li>真面目に働いてきたけれど、どこか満たされない個人の方</li>
-        <li>数字だけではなく、人の息づかいを信じたい経営・人事の方</li>
-        <li>AIを愛しつつ、人間味を手放したくない共犯者</li>
-        <li>小さな実験から始めたい、静かな変化を望む仲間</li>
-      </ul>
-    </section>
-
-    <section>
-      <h2>想定できる導線</h2>
-      <ul>
-        <li>「あなたの物語を聞かせてください」というフォームでの往復書簡</li>
-        <li>少人数のオンライン対話会や手紙型メルマガへの招待</li>
-        <li>PoC・共創プロジェクトの相談、静かな実験の同伴</li>
-      </ul>
-    </section>
-
-    <section class="cta">
-      <h2>静かな招待</h2>
-      <p>もし「ある」に寄り添う感覚にうなずけたなら、あなたの物語を聞かせてください。お問い合わせやPoCの相談、メルマガでの往復書簡など、無理のない形でかまいません。スデニアルは、感謝を起点に前向きな連鎖を共に育ててくださる仲間をお待ちしています。</p>
-      <div>
-        <a href="#" aria-label="感謝から始める対話を申し込む">感謝から始める対話を申し込む</a>
-      </div>
-      <div style="margin-top: 1rem;">
-        <a href="#" aria-label="往復書簡を受け取る">往復書簡を受け取る</a>
-      </div>
-    </section>
-
-    <section class="note">
-      <p>余白メモ：今のあなたにとって「すでにある」と言えるものを、ひと言だけ書き留めてみませんか。</p>
-    </section>
-    <div class="cat-container">
-      <img src="cat.png" alt="寛ぐ猫の写真">
-    </div>
-  </main>
-  <footer>
-    &copy; Sudeniaru. あるに寄りそい、共にひらく。
-  </footer>
+    <h1>サイト製作中</h1>
 </body>
+
 </html>
