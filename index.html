@@ -4,54 +4,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>スデニアル | サイト製作中</title>
+    <title>株式会社スデニアル</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@400;600&family=Zen+Old+Mincho:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            color-scheme: light;
-            --bg: #f6f3ee;
-            --text: #1c1b1a;
-            --accent: #c7765c;
+            --bg-color: #2E8B57;
+            /* SeaGreen - Brighter Green */
+            --text-color: #FFFFFF;
+            --accent-color: #C1E1C1;
+            --decoration-color: rgba(255, 255, 255, 0.12);
         }
 
         body {
             margin: 0;
-            font-family: "Hiragino Sans", "Noto Sans JP", "Yu Gothic", sans-serif;
-            color: var(--text);
-            background: var(--bg);
+            padding: 0;
+            font-family: "Shippori Mincho", "Zen Old Mincho", "Yu Mincho", "Hiragino Mincho ProN", serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            text-align: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Large Alphabet Decoration - Background */
+        .bg-decoration {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Oswald', 'Impact', sans-serif;
+            font-weight: 700;
+            font-size: 28vw;
+            color: var(--decoration-color);
+            z-index: -1;
+            white-space: nowrap;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 60px 40px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
+            align-items: flex-start;
+            min-height: 80vh;
+            position: relative;
+        }
+
+        /* Header Logo (Top Left) */
+        .header-logo {
+            position: absolute;
+            top: 20px;
+            /* Adjusted spacing for image */
+            left: 40px;
+        }
+
+        .header-logo img {
+            height: 60px;
+            /* Adjust height to match previous text size approx */
+            width: auto;
+            display: block;
+        }
+
+        /* Main Copy - Vertical Writing */
+        .main-message {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-left: 60px;
+            margin-top: 60px;
+            /* Space for header logo visual balance */
         }
 
         h1 {
-            font-size: 1.5rem;
-            font-weight: normal;
-            letter-spacing: 0.1em;
+            font-size: 2.6rem;
+            letter-spacing: 0.3em;
+            line-height: 2;
+            margin: 0 0 0 1rem;
+            font-weight: 600;
+        }
+
+        .main-tagline {
+            font-size: 1.2rem;
+            letter-spacing: 0.2em;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .lead-text {
+            margin-right: 3rem;
+            font-size: 1.05rem;
+            line-height: 2.4;
+            letter-spacing: 0.15em;
+            opacity: 0.95;
+        }
+
+        /* Information Block (Left/Bottom Side) */
+        .info-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            height: 100%;
+            margin-right: auto;
+            max-width: 500px;
+            padding-top: 100px;
+            /* Ensure space from top */
+        }
+
+        /* Business Details Section */
+        .business-section {
             margin-bottom: 3rem;
         }
 
-        .company-name {
-            font-size: 1rem;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            margin-bottom: 2rem;
+        .business-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 10px;
         }
 
-        .company-name-en {
-            font-size: 0.9rem;
-            color: var(--accent);
-            letter-spacing: 0.05em;
-            font-family: serif;
+        .business-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .business-list li {
+            position: relative;
+            padding-left: 1.2em;
+            margin-bottom: 0.4em;
+        }
+
+        .business-list li:before {
+            content: "・";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Contact Details & Company Name Wrapper */
+        .contact-wrapper {
+            margin-top: auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            padding-top: 25px;
+            width: 100%;
+        }
+
+        .company-name-footer {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .contact-details {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .contact-row {
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .contact-row a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-row a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                padding: 40px 20px;
+                align-items: center;
+            }
+
+            .header-logo {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin-bottom: 2rem;
+                align-self: flex-start;
+                left: 0;
+            }
+
+            .main-message {
+                writing-mode: horizontal-tb;
+                text-orientation: mixed;
+                height: auto;
+                margin: 0 0 60px 0;
+                text-align: center;
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin: 0 0 2rem 0;
+                line-height: 1.4;
+            }
+
+            .main-tagline {
+                margin-bottom: 1.5rem;
+            }
+
+            .lead-text {
+                margin-right: 0;
+                text-align: left;
+                display: block;
+                text-align: justify;
+            }
+
+            .info-block {
+                width: 100%;
+                max-width: 100%;
+                justify-content: flex-start;
+                padding-top: 0;
+            }
+
+            .contact-wrapper {
+                text-align: left;
+                margin-top: 30px;
+            }
+
+            .bg-decoration {
+                font-size: 35vw;
+                transform: translate(-50%, -50%) rotate(90deg);
+            }
         }
     </style>
 </head>
 
 <body>
-    <h1>サイト製作中</h1>
-    <p class="company-name">株式会社スデニアル</p>
-    <p class="company-name-en">Sudeniaru Co., Ltd.</p>
+
+    <!-- Background Decoration -->
+    <div class="bg-decoration">SUDENIARU</div>
+
+    <div class="container">
+        <!-- Header Logo (Absolute Top-Left) -->
+        <div class="header-logo">
+            <img src="logo.png" alt="sudeniaru">
+        </div>
+
+        <!-- Vertical Main Message (Right Side on Desktop) -->
+        <main class="main-message">
+            <div class="main-tagline">“すでにある価値を発見し未来につなげる”</div>
+            <h1>ないではなく、<br>あるから始める</h1>
+            <div class="lead-text">
+                <p>
+                    満たそうとして走り続ける日々に、<br>
+                    そっと「もう十分あるのかもしれない」<br>
+                    という問いをそえました。<br>
+                    <br>
+                    私たちは、欠けた部分を埋めるより、<br>
+                    すでに手のひらにあるものへ<br>
+                    静かに光を当てます。
+                </p>
+            </div>
+        </main>
+
+        <!-- Company & Business Info (Left Side on Desktop) -->
+        <aside class="info-block">
+            <!-- Business Details -->
+            <div class="business-section">
+                <div class="business-title">変化に強い業務システム開発支援</div>
+                <ul class="business-list">
+                    <li>小さく始めて、必要に応じて拡張できる設計</li>
+                    <li>データ・履歴を蓄積し、見たい指標や表示を柔軟に更新</li>
+                    <li>予算や状況に合わせた仕組み化・自動化を段階導入</li>
+                    <li>従来型のシステム開発より、スムーズでリーズナブルに</li>
+                </ul>
+            </div>
+
+            <div class="business-section">
+                <div class="business-title">人・組織の活性化支援</div>
+                <ul class="business-list">
+                    <li>企画・提案力・思考力UPワークショップ</li>
+                    <li>1on1／対話設計・運用支援（データ活用）</li>
+                    <li>オリジナル人材評価の仕組み化</li>
+                </ul>
+            </div>
+
+            <div class="business-section">
+                <div class="business-title">企画・提案支援</div>
+                <ul class="business-list">
+                    <li>商品／サービス／イベント／広告／ブランディングの企画立案</li>
+                    <li>自社新サービスの立案／コンペ提案企画等</li>
+                    <li>マーケティング戦略立案</li>
+                </ul>
+            </div>
+
+            <!-- Footer Contact Info -->
+            <div class="contact-wrapper">
+                <div class="company-name-footer">株式会社スデニアル</div>
+                <div class="contact-details">
+                    <span class="contact-row">〒810-0041　福岡県福岡市中央区大名2-4-38-415</span>
+                    <span class="contact-row">
+                        <a href="tel:080-5211-7826">080-5211-7826</a> /
+                        <a href="mailto:sano@sudeniaru.co.jp">sano@sudeniaru.co.jp</a>
+                    </span>
+                    <span class="contact-row">
+                        <a href="https://www.sudeniaru.co.jp" target="_blank">www.sudeniaru.co.jp</a>
+                    </span>
+                </div>
+            </div>
+        </aside>
+    </div>
 
 </body>
 
