@@ -159,6 +159,7 @@ BASE_TEMPLATE = """<!DOCTYPE html>
     <main class="container">
         {content}
     </main>
+    <script id="animation-js" data-basepath="../" src="../animation.js"></script>
 </body>
 </html>
 """
