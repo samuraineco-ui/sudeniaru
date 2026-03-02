@@ -11,13 +11,13 @@ document.addEventListener("DOMContentLoaded", () => {
         basePath + 'bg_scene_5.png'
     ];
 
-    // Create container
+    // Create container - pinned to bottom
     const bgContainer = document.createElement('div');
     bgContainer.style.position = 'fixed';
     bgContainer.style.bottom = '0';
     bgContainer.style.left = '0';
     bgContainer.style.width = '100vw';
-    bgContainer.style.height = '100vh';
+    bgContainer.style.height = 'auto';  // Only as tall as the image
     bgContainer.style.pointerEvents = 'none';
     bgContainer.style.zIndex = '-2';
     document.body.appendChild(bgContainer);
@@ -37,19 +37,40 @@ document.addEventListener("DOMContentLoaded", () => {
     const scenes = IMAGES.map((src, i) => {
         const img = document.createElement('img');
         img.src = src;
-        img.style.position = 'absolute';
+        img.style.position = 'relative'; // stack within auto-height container
+        img.style.display = 'block';
         img.style.bottom = '0';
         img.style.left = '0';
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'cover';
+        img.style.width = '100vw';
+        img.style.height = 'auto'; // natural aspect ratio
+        img.style.maxHeight = '60vh'; // cap so it doesn't overwhelm on tall screens
+        img.style.objectFit = 'contain';
         img.style.objectPosition = 'bottom center';
         img.style.transition = 'opacity 3s ease-in-out';
         img.style.opacity = '0';
         img.style.mixBlendMode = 'screen';
+        // Absolutely layer them all on top of each other
+        img.style.position = 'absolute';
+        img.style.bottom = '0';
+        img.style.left = '0';
         bgContainer.appendChild(img);
         return img;
     });
+
+    // Make container itself tall enough to hold the images
+    function resizeContainer() {
+        const imgEl = scenes[0];
+        if (imgEl && imgEl.naturalHeight) {
+            const ratio = imgEl.naturalHeight / imgEl.naturalWidth;
+            const height = Math.min(window.innerWidth * ratio, window.innerHeight * 0.6);
+            bgContainer.style.height = height + 'px';
+        } else {
+            bgContainer.style.height = '40vw';
+        }
+    }
+    scenes[0].addEventListener('load', resizeContainer);
+    window.addEventListener('resize', resizeContainer);
+    resizeContainer();
 
     const VIEWS_PER_STAGE = 100;
     const MAX_STAGES = scenes.length - 1; // 4 transitions
