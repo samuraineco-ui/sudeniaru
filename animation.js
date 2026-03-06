@@ -1,5 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-    // Determine path based on script tag
     const scriptTag = document.getElementById('animation-js');
     const basePath = scriptTag ? scriptTag.getAttribute('data-basepath') : '';
 
@@ -11,69 +10,68 @@ document.addEventListener("DOMContentLoaded", () => {
         basePath + 'bg_scene_5.png'
     ];
 
-    // Create container - pinned to bottom
+    // --------------------------------------------------
+    // Container: fixed, pinned exactly to bottom of browser
+    // 100vw wide (no side gaps), 45vh tall
+    // overflow: hidden ensures no bleed
+    // --------------------------------------------------
     const bgContainer = document.createElement('div');
-    bgContainer.style.position = 'fixed';
-    bgContainer.style.bottom = '0';
-    bgContainer.style.left = '0';
-    bgContainer.style.width = '100vw';
-    bgContainer.style.height = 'auto';  // Only as tall as the image
-    bgContainer.style.pointerEvents = 'none';
-    bgContainer.style.zIndex = '-2';
+    bgContainer.style.cssText = [
+        'position: fixed',
+        'bottom: 0',
+        'left: 0',
+        'width: 100vw',
+        'height: 45vh',
+        'pointer-events: none',
+        'z-index: 0',
+        'overflow: hidden'
+    ].join(';');
     document.body.appendChild(bgContainer);
 
-    // Create sparkle container
+    // Sparkle container (on top of illustration)
     const sparkleContainer = document.createElement('div');
-    sparkleContainer.style.position = 'fixed';
-    sparkleContainer.style.top = '0';
-    sparkleContainer.style.left = '0';
-    sparkleContainer.style.width = '100vw';
-    sparkleContainer.style.height = '100vh';
-    sparkleContainer.style.pointerEvents = 'none';
-    sparkleContainer.style.zIndex = '-1';
-    sparkleContainer.style.overflow = 'hidden';
+    sparkleContainer.style.cssText = [
+        'position: fixed',
+        'top: 0',
+        'left: 0',
+        'width: 100vw',
+        'height: 100vh',
+        'pointer-events: none',
+        'z-index: 1',
+        'overflow: hidden'
+    ].join(';');
     document.body.appendChild(sparkleContainer);
 
-    const scenes = IMAGES.map((src, i) => {
+    // --------------------------------------------------
+    // All 5 images: 
+    //   - position: absolute inside container
+    //   - bottom: 0 → bottom of image = bottom of container = bottom of screen
+    //   - width: 100% + height: 100% + object-fit: cover → no side gaps on any screen
+    //   - filter: inverts white→dark green for light background
+    //   - NO mix-blend-mode (not needed with light bg + dark filter)
+    // --------------------------------------------------
+    const scenes = IMAGES.map((src) => {
         const img = document.createElement('img');
         img.src = src;
-        img.style.position = 'relative'; // stack within auto-height container
-        img.style.display = 'block';
-        img.style.bottom = '0';
-        img.style.left = '0';
-        img.style.width = '100vw';
-        img.style.height = 'auto'; // natural aspect ratio
-        img.style.maxHeight = '60vh'; // cap so it doesn't overwhelm on tall screens
-        img.style.objectFit = 'contain';
-        img.style.objectPosition = 'bottom center';
-        img.style.transition = 'opacity 3s ease-in-out';
-        img.style.opacity = '0';
-        img.style.mixBlendMode = 'screen';
-        // Absolutely layer them all on top of each other
-        img.style.position = 'absolute';
-        img.style.bottom = '0';
-        img.style.left = '0';
+        img.style.cssText = [
+            'position: absolute',
+            'bottom: 0',
+            'left: 0',
+            'width: 100%',
+            'height: 100%',
+            'object-fit: cover',
+            'object-position: bottom center',
+            'transition: opacity 3s ease-in-out',
+            'opacity: 0',
+            // Convert white silhouettes → dark forest green on light bg
+            'filter: invert(1) sepia(1) saturate(3) hue-rotate(100deg) brightness(0.45)'
+        ].join(';');
         bgContainer.appendChild(img);
         return img;
     });
 
-    // Make container itself tall enough to hold the images
-    function resizeContainer() {
-        const imgEl = scenes[0];
-        if (imgEl && imgEl.naturalHeight) {
-            const ratio = imgEl.naturalHeight / imgEl.naturalWidth;
-            const height = Math.min(window.innerWidth * ratio, window.innerHeight * 0.6);
-            bgContainer.style.height = height + 'px';
-        } else {
-            bgContainer.style.height = '40vw';
-        }
-    }
-    scenes[0].addEventListener('load', resizeContainer);
-    window.addEventListener('resize', resizeContainer);
-    resizeContainer();
-
     const VIEWS_PER_STAGE = 100;
-    const MAX_STAGES = scenes.length - 1; // 4 transitions
+    const MAX_STAGES = scenes.length - 1;
 
     function updateBackground(views) {
         let progress = views / VIEWS_PER_STAGE;
@@ -84,7 +82,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         scenes.forEach((img, i) => {
             if (i === index) {
-                // If it's the last stage, force opacity 1
                 img.style.opacity = (i === MAX_STAGES) ? 1 : (1 - fraction);
             } else if (i === index + 1) {
                 img.style.opacity = fraction;
@@ -94,20 +91,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Adding sparkle global CSS once
+    // Sparkle effect CSS (adjusted for light bg - use green sparkles)
     const style = document.createElement('style');
     style.innerHTML = `
     @keyframes twinkerAnim {
-        0% { transform: scale(0); opacity: 0; }
-        50% { transform: scale(1.5); opacity: 1; }
-        100% { transform: scale(0); opacity: 0; }
+        0%   { transform: scale(0) rotate(0deg);   opacity: 0; }
+        40%  { transform: scale(1.4) rotate(45deg); opacity: 1; }
+        100% { transform: scale(0) rotate(90deg);   opacity: 0; }
     }
     .sp-star {
         position: absolute;
-        width: 8px; height: 8px;
-        background: #fff;
+        width: 8px;
+        height: 8px;
+        background: #2E8B57;
         border-radius: 50%;
-        box-shadow: 0 0 15px 4px rgba(255,255,255,0.9);
+        box-shadow: 0 0 12px 4px rgba(46, 139, 87, 0.7);
         opacity: 0;
         animation: twinkerAnim 2s ease-in-out forwards;
     }
@@ -121,45 +119,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 sp.className = 'sp-star';
                 sp.style.left = (Math.random() * 100) + 'vw';
                 sp.style.top = (Math.random() * 100) + 'vh';
-
-                // Varied animation duration
                 sp.style.animationDuration = (1.5 + Math.random() * 1.5) + 's';
-
                 sparkleContainer.appendChild(sp);
                 setTimeout(() => sp.remove(), 3000);
             }, Math.random() * 800);
         }
     }
 
-    // 1. Initial State: Load last known views quickly
+    // 1. Instantly show last known scene (no flicker on revisit)
     let localViews = parseInt(localStorage.getItem('sudeniaruViews')) || 0;
-
-    // Show old layout instantly
     updateBackground(localViews);
 
-    // 2. Fetch new global hits
-    let counterUrl = 'https://api.counterapi.dev/v1/sudeniaru/home/up';
+    // 2. Hit the global counter and trigger growth sparkle if count grew
+    const counterUrl = 'https://api.counterapi.dev/v1/sudeniaru/home/up';
     fetch(counterUrl)
         .then(res => res.json())
         .then(data => {
             if (data && data.count) {
-                let globalViews = data.count;
-                // If the global view count is higher, trigger growth effect
+                const globalViews = data.count;
                 if (globalViews > localViews) {
                     setTimeout(() => {
                         createSparkles();
-                        setTimeout(() => updateBackground(globalViews), 500); // Wait a tiny bit after sparkle starts
-                    }, 1500); // 1.5s delay to admire the initial state
+                        setTimeout(() => updateBackground(globalViews), 500);
+                    }, 1500);
                 } else if (localViews === 0) {
-                    // Very first time
                     setTimeout(() => updateBackground(globalViews), 1000);
                 }
                 localStorage.setItem('sudeniaruViews', globalViews);
             }
         })
-        .catch(err => {
-            // Fallback: If API fails, just increment locally
-            console.warn("Could not fetch global views, incrementing locally.");
+        .catch(() => {
+            // Fallback: increment locally when API unreachable
             setTimeout(() => {
                 localViews++;
                 createSparkles();
