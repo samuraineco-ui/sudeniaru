@@ -140,6 +140,9 @@ BASE_TEMPLATE = """<!DOCTYPE html>
             overflow: hidden;
             border-radius: 8px;
             margin: 2rem 0;
+            background-color: #000;
+            background-size: cover;
+            background-position: center;
         }}
         .youtube-wrapper iframe {{
             position: absolute;
