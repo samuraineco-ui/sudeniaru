@@ -8,6 +8,7 @@ from datetime import datetime
 POSTS_DIR = 'blog/posts'
 OUTPUT_DIR = 'blog'
 SITE_TITLE = '株式会社スデニアル - ブログ'
+BASE_URL = 'https://samuraineco-ui.github.io/sudeniaru/'
 
 # --- HTML Templates ---
 BASE_TEMPLATE = """<!DOCTYPE html>
@@ -245,7 +246,13 @@ def build():
 
     # 各記事のHTMLページを生成
     for post in posts:
-        meta_tags = f'<meta name="description" content="{post["desc"]}">'
+        post_url = f"{BASE_URL}{OUTPUT_DIR}/{post['slug']}.html"
+        meta_tags = f"""<meta name="description" content="{post["desc"]}">
+    <meta property="og:title" content="{post['title']} | {SITE_TITLE}" />
+    <meta property="og:description" content="{post["desc"]}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{post_url}" />
+    <meta property="og:site_name" content="株式会社スデニアル" />"""
         page_content = f"""
         <h1>{post['title']}</h1>
         <span class="post-date">{post['date']}</span>
@@ -277,9 +284,17 @@ def build():
     if not list_items:
         list_items = "<p>まだ記事がありません。</p>"
 
+    blog_index_url = f"{BASE_URL}{OUTPUT_DIR}/index.html"
+    index_meta_tags = f"""<meta name="description" content="株式会社スデニアルの公式ブログ一覧です。">
+    <meta property="og:title" content="{SITE_TITLE}" />
+    <meta property="og:description" content="株式会社スデニアルの公式ブログ一覧です。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{blog_index_url}" />
+    <meta property="og:site_name" content="株式会社スデニアル" />"""
+
     list_html = BASE_TEMPLATE.format(
         page_title=SITE_TITLE,
-        meta_tags='<meta name="description" content="株式会社スデニアルの公式ブログ一覧です。">',
+        meta_tags=index_meta_tags,
         top_link_url="../index.html",
         top_link_text="コーポレートサイトへ戻る",
         content=f"<h1>Blog</h1>{list_items}"
@@ -314,6 +329,24 @@ def build():
                 
     except Exception as e:
         print(f"トップページ更新エラー: {e}")
+
+    # --- Sitemap (sitemap.xml) 生成 ---
+    try:
+        sitemap_path = 'sitemap.xml'
+        sitemap_urls = f"  <url>\n    <loc>{BASE_URL}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>1.0</priority>\n  </url>\n"
+        sitemap_urls += f"  <url>\n    <loc>{BASE_URL}{OUTPUT_DIR}/index.html</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>\n"
+        for p in posts:
+             url = f"{BASE_URL}{OUTPUT_DIR}/{p['slug']}.html"
+             date_str = p['date']
+             sitemap_urls += f"  <url>\n    <loc>{url}</loc>\n    <lastmod>{date_str}</lastmod>\n    <priority>0.6</priority>\n  </url>\n"
+        
+        sitemap_content = f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{sitemap_urls}</urlset>'
+        
+        with open(sitemap_path, 'w', encoding='utf-8') as f:
+             f.write(sitemap_content)
+        print("sitemap.xmlを生成しました。")
+    except Exception as e:
+        print(f"sitemap.xml生成エラー: {e}")
 
     print(f"ビルド完了！ {len(posts)} 件の記事を生成しました。")
 

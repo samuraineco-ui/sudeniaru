@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://samuraineco-ui.github.io/sudeniaru/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://samuraineco-ui.github.io/sudeniaru/blog/index.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://samuraineco-ui.github.io/sudeniaru/blog/Creep-is-the-best-8-2026.html</loc>
+    <lastmod>2026-03-08</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://samuraineco-ui.github.io/sudeniaru/blog/starts-here-march-5-2026.html</loc>
+    <lastmod>2026-03-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+</urlset>
