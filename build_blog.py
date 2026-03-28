@@ -288,6 +288,33 @@ def build():
     with open(os.path.join(OUTPUT_DIR, 'index.html'), 'w', encoding='utf-8') as f:
         f.write(list_html)
 
+    # --- トップページ（index.html）の「最新のブログ記事」枠を更新 ---
+    try:
+        import re
+        top_page_path = 'index.html'
+        with open(top_page_path, 'r', encoding='utf-8') as f:
+            top_content = f.read()
+            
+        start_mark = '<!-- RECENT_POSTS_START -->'
+        end_mark = '<!-- RECENT_POSTS_END -->'
+        
+        if start_mark in top_content and end_mark in top_content:
+            recent_html = f"\n            <div class=\"business-section\">\n                <div class=\"business-title\">最新のブログ記事</div>\n                <ul class=\"business-list\">\n"
+            for p in posts[:5]:
+                # トップページからの相対パスになるので blog/記事.html になる。
+                recent_html += f"                    <li style=\"margin-bottom: 10px;\"><a href=\"blog/{p['slug']}.html\" style=\"color: var(--text-color); font-weight: bold; border-bottom: 2px solid var(--accent-color); text-decoration: none; padding-bottom: 2px; transition: color 0.3s;\" onmouseover=\"this.style.color='var(--accent-color)'\" onmouseout=\"this.style.color='var(--text-color)'\">{p['title']}</a></li>\n"
+            recent_html += f"                </ul>\n            </div>\n            "
+            
+            replacement = f"{start_mark}{recent_html}{end_mark}"
+            pattern = re.compile(f"{start_mark}.*?{end_mark}", re.DOTALL)
+            new_top_content = pattern.sub(replacement, top_content)
+            
+            with open(top_page_path, 'w', encoding='utf-8') as f:
+                f.write(new_top_content)
+                
+    except Exception as e:
+        print(f"トップページ更新エラー: {e}")
+
     print(f"ビルド完了！ {len(posts)} 件の記事を生成しました。")
 
 if __name__ == '__main__':
