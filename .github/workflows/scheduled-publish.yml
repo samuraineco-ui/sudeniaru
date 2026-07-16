@@ -1,0 +1,45 @@
+name: Scheduled blog publish
+
+# 予約投稿: リポジトリにある blog/posts/*.md をビルドして本公開する。
+# GitHub のスケジュールは UTC。13:00 JST = 04:00 UTC。
+# 2026-07-19 13:04 JST に「足るを知る」記事を公開する目的で設定。
+# 手動実行（workflow_dispatch）でもいつでも公開できる。
+
+on:
+  schedule:
+    - cron: '4 4 19 7 *'   # 2026-07-19 04:04 UTC = 13:04 JST
+  workflow_dispatch:        # 手動トリガー用
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install deps
+        run: pip install markdown python-frontmatter
+
+      - name: Build blog
+        run: python build_blog.py
+
+      - name: Commit and push if changed
+        run: |
+          git config user.name "sudeniaru-publisher[bot]"
+          git config user.email "kanri@aso-yoshio-shoji.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "公開する変更はありませんでした。"
+          else
+            git commit -m "Publish scheduled blog post(s)"
+            git push
+            echo "公開しました。"
+          fi
