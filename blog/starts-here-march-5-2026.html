@@ -169,7 +169,56 @@
             text-decoration: none;
             color: var(--text-color);
         }
+        .post-card-link {
+            display: block;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+        .post-card-link:hover .post-card h2 {
+            color: var(--accent-color);
+        }
+        /* Prev/Next Navigation */
+        .post-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 18px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .post-nav a {
+            display: block;
+            max-width: 46%;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+        .post-nav a:hover {
+            color: var(--accent-color);
+        }
+        .post-nav .nav-next {
+            margin-left: auto;
+            text-align: right;
+        }
+        .post-nav .nav-label {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 6px;
+        }
+        .post-nav .nav-title {
+            display: inline-block;
+            font-weight: bold;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 2px;
+            line-height: 1.5;
+        }
         @media (max-width: 768px) {
+            .post-nav { flex-direction: column; gap: 18px; }
+            .post-nav a { max-width: 100%; }
+            .post-nav .nav-next { text-align: left; margin-left: 0; }
             .bg-decoration {
                 font-size: 35vw;
                 transform: translate(-50%, -50%) rotate(90deg);
@@ -193,6 +242,7 @@
             
         <h1>2026年3月5日　ここから</h1>
         <span class="post-date">2026-03-05</span>
+        <nav class="post-nav"><span class="nav-prev"></span><a class="nav-next" href="Creep-is-the-best-8-2026.html"><span class="nav-label">次の記事 →</span><span class="nav-title">未来に必要なこと</span></a></nav>
         <div class="post-body">
             <p>2026年3月5日。とりあえず始めます。</p>
 <p>株式会社スデニアルのサイトは前から作っていたのですが、<br />
@@ -230,6 +280,7 @@
 <iframe width="560" height="315" src="https://www.youtube.com/embed/uWjkfSrZK5Y?si=V3ijNeTpOkA4-ncb" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
         </div>
+        <nav class="post-nav"><span class="nav-prev"></span><a class="nav-next" href="Creep-is-the-best-8-2026.html"><span class="nav-label">次の記事 →</span><span class="nav-title">未来に必要なこと</span></a></nav>
         
         </div>
     </main>

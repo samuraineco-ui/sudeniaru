@@ -169,7 +169,56 @@
             text-decoration: none;
             color: var(--text-color);
         }
+        .post-card-link {
+            display: block;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+        .post-card-link:hover .post-card h2 {
+            color: var(--accent-color);
+        }
+        /* Prev/Next Navigation */
+        .post-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 18px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .post-nav a {
+            display: block;
+            max-width: 46%;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+        .post-nav a:hover {
+            color: var(--accent-color);
+        }
+        .post-nav .nav-next {
+            margin-left: auto;
+            text-align: right;
+        }
+        .post-nav .nav-label {
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 6px;
+        }
+        .post-nav .nav-title {
+            display: inline-block;
+            font-weight: bold;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 2px;
+            line-height: 1.5;
+        }
         @media (max-width: 768px) {
+            .post-nav { flex-direction: column; gap: 18px; }
+            .post-nav a { max-width: 100%; }
+            .post-nav .nav-next { text-align: left; margin-left: 0; }
             .bg-decoration {
                 font-size: 35vw;
                 transform: translate(-50%, -50%) rotate(90deg);
@@ -191,17 +240,29 @@
     <main class="container">
         <div class="post-container">
             <h1>Blog</h1>
-        <article class="post-card">
-            <span class="post-date">2026-03-08</span>
-            <h2><a href="Creep-is-the-best-8-2026.html">未来に必要なこと</a></h2>
-            <p>青少年向けのカナダ発のアートを使ったメンタルヘルスのプログラムを実施されている福岡アズイズさんのワークショップに参加したよ</p>
-        </article>
+        <a class="post-card-link" href="not-judging-july-17-2026.html">
+            <article class="post-card">
+                <span class="post-date">2026-07-17</span>
+                <h2>ジャッジしない、ということ</h2>
+                <p>感情は受け取る。でも、感情のままに世界の意味を決めない。「ジャッジしない」について最近考えていること。</p>
+            </article>
+        </a>
         
-        <article class="post-card">
-            <span class="post-date">2026-03-05</span>
-            <h2><a href="starts-here-march-5-2026.html">2026年3月5日　ここから</a></h2>
-            <p>2026年3月5日。スデニアルのブログを始めます。日々考えていることや、事業、AI、人について思うことをゆるく綴っていく最初の記事。</p>
-        </article>
+        <a class="post-card-link" href="Creep-is-the-best-8-2026.html">
+            <article class="post-card">
+                <span class="post-date">2026-03-08</span>
+                <h2>未来に必要なこと</h2>
+                <p>青少年向けのカナダ発のアートを使ったメンタルヘルスのプログラムを実施されている福岡アズイズさんのワークショップに参加したよ</p>
+            </article>
+        </a>
+        
+        <a class="post-card-link" href="starts-here-march-5-2026.html">
+            <article class="post-card">
+                <span class="post-date">2026-03-05</span>
+                <h2>2026年3月5日　ここから</h2>
+                <p>2026年3月5日。スデニアルのブログを始めます。日々考えていることや、事業、AI、人について思うことをゆるく綴っていく最初の記事。</p>
+            </article>
+        </a>
         
         </div>
     </main>

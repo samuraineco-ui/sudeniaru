@@ -177,7 +177,56 @@ BASE_TEMPLATE = """<!DOCTYPE html>
             text-decoration: none;
             color: var(--text-color);
         }}
+        .post-card-link {{
+            display: block;
+            text-decoration: none;
+            color: var(--text-color);
+        }}
+        .post-card-link:hover .post-card h2 {{
+            color: var(--accent-color);
+        }}
+        /* Prev/Next Navigation */
+        .post-nav {{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            margin: 30px 0;
+            padding: 18px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }}
+        .post-nav a {{
+            display: block;
+            max-width: 46%;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }}
+        .post-nav a:hover {{
+            color: var(--accent-color);
+        }}
+        .post-nav .nav-next {{
+            margin-left: auto;
+            text-align: right;
+        }}
+        .post-nav .nav-label {{
+            display: block;
+            font-size: 0.8rem;
+            opacity: 0.7;
+            margin-bottom: 6px;
+        }}
+        .post-nav .nav-title {{
+            display: inline-block;
+            font-weight: bold;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 2px;
+            line-height: 1.5;
+        }}
         @media (max-width: 768px) {{
+            .post-nav {{ flex-direction: column; gap: 18px; }}
+            .post-nav a {{ max-width: 100%; }}
+            .post-nav .nav-next {{ text-align: left; margin-left: 0; }}
             .bg-decoration {{
                 font-size: 35vw;
                 transform: translate(-50%, -50%) rotate(90deg);
@@ -244,8 +293,26 @@ def build():
     # 日付で降順ソート
     posts.sort(key=lambda x: x['date'], reverse=True)
 
+    # 前後の記事ナビゲーションを生成するヘルパー
+    def make_nav(older, newer):
+        prev_html = (
+            f'<a class="nav-prev" href="{older["slug"]}.html">'
+            f'<span class="nav-label">← 前の記事</span>'
+            f'<span class="nav-title">{older["title"]}</span></a>'
+        ) if older else '<span class="nav-prev"></span>'
+        next_html = (
+            f'<a class="nav-next" href="{newer["slug"]}.html">'
+            f'<span class="nav-label">次の記事 →</span>'
+            f'<span class="nav-title">{newer["title"]}</span></a>'
+        ) if newer else '<span class="nav-next"></span>'
+        return f'<nav class="post-nav">{prev_html}{next_html}</nav>'
+
     # 各記事のHTMLページを生成
-    for post in posts:
+    for i, post in enumerate(posts):
+        # posts は日付降順。i-1 が新しい記事、i+1 が古い記事。
+        newer = posts[i - 1] if i > 0 else None
+        older = posts[i + 1] if i < len(posts) - 1 else None
+        nav_html = make_nav(older, newer)
         post_url = f"{BASE_URL}{OUTPUT_DIR}/{post['slug']}.html"
         meta_tags = f"""<meta name="description" content="{post["desc"]}">
     <meta property="og:title" content="{post['title']} | {SITE_TITLE}" />
@@ -256,9 +323,11 @@ def build():
         page_content = f"""
         <h1>{post['title']}</h1>
         <span class="post-date">{post['date']}</span>
+        {nav_html}
         <div class="post-body">
             {post['html_content']}
         </div>
+        {nav_html}
         """
         html = BASE_TEMPLATE.format(
             page_title=f"{post['title']} | {SITE_TITLE}",
@@ -274,11 +343,13 @@ def build():
     list_items = ""
     for post in posts:
         list_items += f"""
-        <article class="post-card">
-            <span class="post-date">{post['date']}</span>
-            <h2><a href="{post['slug']}.html">{post['title']}</a></h2>
-            <p>{post['desc']}</p>
-        </article>
+        <a class="post-card-link" href="{post['slug']}.html">
+            <article class="post-card">
+                <span class="post-date">{post['date']}</span>
+                <h2>{post['title']}</h2>
+                <p>{post['desc']}</p>
+            </article>
+        </a>
         """
     
     if not list_items:
