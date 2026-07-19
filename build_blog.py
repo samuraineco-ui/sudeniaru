@@ -264,17 +264,25 @@ def init():
 
 def build():
     posts = []
-    
+    today_str = datetime.today().strftime('%Y-%m-%d')
+
     # 全てのマークダウンファイルを読み込む
     for file_path in glob.glob(os.path.join(POSTS_DIR, '*.md')):
         with open(file_path, 'r', encoding='utf-8') as f:
             post = frontmatter.load(f)
-            
+
             # メタデータがなければデフォルト値を設定
             title = post.get('title', '無題')
-            date_str = str(post.get('date', datetime.today().strftime('%Y-%m-%d')))
+            date_str = str(post.get('date', today_str))
             desc = post.get('description', '')
-            
+
+            # 予約投稿: date が未来（今日より後）の記事はまだ公開しない。
+            # 日付が YYYY-MM-DD 形式で比較できる場合のみ判定し、
+            # パースできない場合は従来どおり公開する。
+            if len(date_str) >= 10 and date_str[:10] > today_str:
+                print(f"未来の記事のためスキップ: {os.path.basename(file_path)} (date: {date_str})")
+                continue
+
             # HTMLに変換
             html_content = markdown.markdown(post.content, extensions=['tables', 'fenced_code'])
             

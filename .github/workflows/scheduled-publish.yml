@@ -2,12 +2,13 @@ name: Scheduled blog publish
 
 # 予約投稿: リポジトリにある blog/posts/*.md をビルドして本公開する。
 # GitHub のスケジュールは UTC。13:00 JST = 04:00 UTC。
-# 2026-07-19 13:04 JST に「足るを知る」記事を公開する目的で設定。
+# 毎日 13:04 JST に実行し、date が当日以前になった記事を自動公開する。
+# （build_blog.py が未来日付の記事をスキップするので、予約投稿として機能する）
 # 手動実行（workflow_dispatch）でもいつでも公開できる。
 
 on:
   schedule:
-    - cron: '4 4 19 7 *'   # 2026-07-19 04:04 UTC = 13:04 JST
+    - cron: '4 4 * * *'    # 毎日 04:04 UTC = 13:04 JST
   workflow_dispatch:        # 手動トリガー用
 
 permissions:
